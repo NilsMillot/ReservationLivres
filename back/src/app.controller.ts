@@ -10,25 +10,25 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Post('/create-book')
+  @Post('/books')
   createBook() {
-    return "deuxieme return";
+    return "creation d'un livre";
   }
 
-  @Delete('/delete-book')
+  @Delete('/books/{bookId}')
   deleteBook() {
-    return "suppression d'un bouquin";
+    return "suppression d'un livre";
   }
-  @Get('/read-book')
+  @Get('/books/{bookId}')
   readBook() {
-    return "lecture d'un bouquin";
+    return "lecture d'un livre";
   }
 
-  @Put('/reserve-book')
+  @Put('/books/{bookId}/assign')
   reserveBook() {
-    return "réservation d'un bouquin";
+    return "réservation d'un livre";
   }
-  @Post('/report-rendering')
+  @Put('/books/{bookId}/return')
   reportRenderingBook() {
     return "signalement de rendu d'un livre";
   }
