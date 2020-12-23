@@ -1,7 +1,7 @@
 import { Controller, Get, Delete, Post, Put } from '@nestjs/common';
 import { AppService } from './app.service';
 
-@Controller()
+@Controller('books')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
@@ -10,25 +10,25 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Post('/books')
+  @Post('')
   createBook() {
     return "creation d'un livre";
   }
 
-  @Delete('/books/{bookId}')
+  @Delete('{bookId}')
   deleteBook() {
     return "suppression d'un livre";
   }
-  @Get('/books/{bookId}')
+  @Get('{bookId}')
   readBook() {
     return "lecture d'un livre";
   }
 
-  @Put('/books/{bookId}/assign')
+  @Put('{bookId}/assign')
   reserveBook() {
     return "réservation d'un livre";
   }
-  @Put('/books/{bookId}/return')
+  @Put('{bookId}/return')
   reportRenderingBook() {
     return "signalement de rendu d'un livre";
   }

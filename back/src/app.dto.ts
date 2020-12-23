@@ -18,6 +18,25 @@ export class ReservationDTO{
     endReserve: Date;
 }
 
+export class CreateUserDTO{
+    private idUserCpt = 0;
+
+    constructor(private readonly role: ERole) {
+        this.id = this.idUserCpt;
+        this.isConnected = true;
+        this.idUserCpt++;
+    }
+    readonly isConnected: boolean;
+    readonly id: number;
+}
+
+export class CreateBookDTO{
+    readonly title: string;
+    readonly id: number;
+    readonly isReserved: boolean;
+    readonly reservedById: number;
+}
+
 enum ERole {
     Admin = "ADMIN",
     Reader = "READER",

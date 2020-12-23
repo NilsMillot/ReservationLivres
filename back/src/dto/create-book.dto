@@ -1,6 +1,0 @@
-export class CreateBookDTO{
-    title: string;
-    id: number;
-    isReserved: boolean;
-    reservedById: number;
-}
