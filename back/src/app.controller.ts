@@ -1,36 +1,40 @@
-import { Controller, Get, Delete, Post, Put } from '@nestjs/common';
+import { Controller, Get, Delete, Post, Put, Body, Param, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AppService } from './app.service';
+import { BookDTO } from './app.dto'
 
 @Controller('books')
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
+  @Post()
+  @UsePipes(new ValidationPipe({transform: true}))
+  createBook(@Body() dto: BookDTO) {
+    console.log(dto);
+    return "creation du livre " + dto;
   }
 
-  @Post('')
-  createBook() {
-    return "creation d'un livre";
+  @Delete(':bookId')
+  deleteBook(@Param('bookId') bookId: number) {
+    console.log(bookId);
+    return "suppression du livre" + bookId;
   }
 
-  @Delete('{bookId}')
-  deleteBook() {
-    return "suppression d'un livre";
-  }
-  @Get('{bookId}')
-  readBook() {
-    return "lecture d'un livre";
+  @Get(':bookId')
+  readBook(@Param('bookId') bookId: number) {
+    console.log(bookId);
+    return "lecture du livre n°" + bookId;
   }
 
-  @Put('{bookId}/assign')
-  reserveBook() {
-    return "réservation d'un livre";
+  @Put(':bookId/assign')
+  reserveBook(@Param('bookId') bookId: number) {
+    console.log(bookId);
+    return "réservation du livre id n°" + bookId;
   }
-  @Put('{bookId}/return')
-  reportRenderingBook() {
-    return "signalement de rendu d'un livre";
+
+  @Put(':bookId/return')
+  reportRenderingBook(@Param('bookId') bookId: number) {
+    console.log(bookId);
+    return "signalement de rendu du livre avec l'id " + bookId;
   }
 
 }

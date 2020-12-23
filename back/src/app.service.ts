@@ -1,54 +1,44 @@
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
-import { BookDTO, UserDTO, ReservationDTO, CreateUserDTO, CreateBookDTO } from './app.dto';
+import { BookDTO, UserDTO, ReservationDTO } from './app.dto';
 
 
 
 @Injectable()
 export class AppService {
-
-  constructor(@InjectModel('Book') private readonly postBook: Model<BookDTO>) { }
-
-  getHello(): string {
-    return 'Hello World!';
-  }
+  //regarder la doc InjectModel https://docs.nestjs.com/recipes/mongodb
+  //Mon constructor n'est pas bon
+  constructor(@InjectModel('BOOK_MODEL') private readonly bookModel: Model<any>, @InjectModel('USER_MODEL') private readonly userModel: Model<any>) { } 
 
   async getBooks(): Promise<BookDTO[]> {
-      const books = await this.postBook.find().exec();
+      const books = await this.bookModel.find().exec();
       return books;
   }
 
   async getBook(bookID: number): Promise<BookDTO> {
-      const book = await this.postBook
+      const book = await this.bookModel
           .findById(bookID)
           .exec();
       return book;
   }
 
   async createBook(createBookDTO: BookDTO): Promise<BookDTO> {
-      const newBook = await new CreateBookDTO();
-      return newBook.save();
+      const createdBook = await new this.bookModel(BookDTO);
+      return createdBook;
+      // return createdBook.save();
   }
 
   async deleteBook(bookID: number): Promise<any> {
-      const deletedBook = await this.postBook
+      const deletedBook = await this.bookModel
           .findByIdAndRemove(bookID);
       return deletedBook;
   }
 
-  async createUser(role: any) : Promise<CreateUserDTO> {
-    const newUser = await new CreateUserDTO(role);
-    return newUser;
+  async createUser(role: any) : Promise<UserDTO> {
+    const createdUser = await new this.userModel(UserDTO);
+    return createdUser;
+    // return createdUser.save();
   }
-
-  // async createUser(role) {
-  //   const user = {
-  //     UserDTO.id = this.userIdCpt,
-  //     UserDTO.role = role,
-  //   }
-  //   this.userIdCpt++;
-  //   return user;
-  // }
 
 }
