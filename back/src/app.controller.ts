@@ -1,4 +1,4 @@
-import { Controller, Get } from '@nestjs/common';
+import { Controller, Get, Delete, Post, Put } from '@nestjs/common';
 import { AppService } from './app.service';
 
 @Controller()
@@ -10,12 +10,12 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Get('/create-book')
+  @Post('/create-book')
   createBook() {
     return "deuxieme return";
   }
 
-  @Get('/delete-book')
+  @Delete('/delete-book')
   deleteBook() {
     return "suppression d'un bouquin";
   }
@@ -24,11 +24,11 @@ export class AppController {
     return "lecture d'un bouquin";
   }
 
-  @Get('/reserve-book')
+  @Put('/reserve-book')
   reserveBook() {
     return "réservation d'un bouquin";
   }
-  @Get('/report-rendering')
+  @Post('/report-rendering')
   reportRenderingBook() {
     return "signalement de rendu d'un livre";
   }
