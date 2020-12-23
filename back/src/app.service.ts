@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs';
-import { Book } from './book.module';
-import { CreatePostDTO } from './dto/create-book.dto';
+import { BookDTO, UserDTO, ReservationDTO } from './app.dto';
+import { CreateBookDTO } from './dto/create-book.dto';
 
 
 @Injectable()
@@ -14,20 +14,20 @@ export class AppService {
       return 'Hello World!';
     }
 
-   async getBooks(): Promise<Book[]> {
+   async getBooks(): Promise<BookDTO[]> {
        const books = await this.postBook.find().exec();
        return books;
    }
 
-   async getBook(bookID: number): Promise<Book> {
+   async getBook(bookID: number): Promise<BookDTO> {
        const book = await this.postBook
            .findById(bookID)
            .exec();
        return book;
    }
 
-   async createBook(createBookDTO: CreateBookDTO): Promise<Book> {
-       const newBook = await this.postBook(createBookDTO);
+   async createBook(createBookDTO: BookDTO): Promise<BookDTO> {
+       const newBook = await this.postBook(BookDTO);
        return newBook.save();
    }
 
