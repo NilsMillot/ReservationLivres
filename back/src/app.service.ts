@@ -4,12 +4,11 @@ import { InjectModel } from '@nestjs/mongoose';
 import { BookDTO, UserDTO, ReservationDTO } from './app.dto';
 
 
-
 @Injectable()
 export class AppService {
   //regarder la doc InjectModel https://docs.nestjs.com/recipes/mongodb
   //Mon constructor n'est pas bon
-  constructor(@InjectModel('BOOK_MODEL') private readonly bookModel: Model<any>, @InjectModel('USER_MODEL') private readonly userModel: Model<any>) { } 
+  constructor(@InjectModel('BOOK_MODEL') private readonly bookModel: Model<any>) { } 
 
   async getBooks(): Promise<BookDTO[]> {
       const books = await this.bookModel.find().exec();
@@ -35,10 +34,10 @@ export class AppService {
       return deletedBook;
   }
 
-  async createUser(role: any) : Promise<UserDTO> {
-    const createdUser = await new this.userModel(UserDTO);
-    return createdUser;
+  // async createUser(role: any) : Promise<UserDTO> {
+  //   const createdUser = await new this.userModel(UserDTO);
+  //   return createdUser;
     // return createdUser.save();
-  }
+  //}
 
 }
