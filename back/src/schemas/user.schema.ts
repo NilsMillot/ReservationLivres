@@ -1,12 +1,26 @@
-import * as mongoose from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Document } from 'mongoose';
+
+export type UserDocument = User & Document;
 
 enum ERole {
     Admin = "ADMIN",
     Reader = "READER",
 }
 
-export const UserSchema = new mongoose.Schema({
-  id: Number,
-  isConnected: Boolean,
-  role: ERole,
-});
+@Schema()
+export class User {
+    @Prop({required: true})
+    title: string;
+
+    @Prop()
+    id: number;
+
+    @Prop()
+    isConnected: boolean;
+
+    @Prop()
+    role: ERole;
+}
+
+export const UserSchema = SchemaFactory.createForClass(User);
