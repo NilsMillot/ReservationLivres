@@ -47,5 +47,22 @@ export class AppService {
       throw new UserHasTooMuchBooks();
     }
   }
+
+  async report(bookId: number, userId: number) {
+    const books = await this.bookModel
+      .find({ reservedById: userId }, { id: bookId })
+      .update({ isReserved: false })
+      .exec();
+
+    if (books.length == 0) {
+      throw new UserHasNeverReseveBooks();
+    }
+  }
+
+  // async createUser(userDTO: UserDTO): Promise<User> {
+  //     const createdUser = await new this.userModel(userDTO);
+  //     return createdUser.save();
+  // }
 }
 export class UserHasTooMuchBooks extends Error {}
+export class UserHasNeverReseveBooks extends Error {}

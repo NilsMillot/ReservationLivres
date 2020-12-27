@@ -1,7 +1,7 @@
 import { Controller, Get, Delete, Post, Put, Body, Param, UsePipes, ValidationPipe } from '@nestjs/common';
 import { AppService } from './app.service';
-import { BookDTO } from './app.dto'
-import { UserHasTooMuchBooks } from './app.service';
+import { BookDTO, UserDTO } from './app.dto'
+import { UserHasTooMuchBooks, UserHasNeverReseveBooks } from './app.service';
 
 @Controller('books')
 export class AppController {
@@ -26,21 +26,24 @@ export class AppController {
   }
 
   @Put(':bookId/assign')
-  reserveBook(@Param('bookId') bookId: number) {
+  reserveBook(@Param('bookId') bookId: number, @Body() userId: number) {
     try {
-      return this.appService.assign(bookId);
+      return this.appService.assign(bookId, userId);
     } catch (e) {
       if (e instanceof UserHasTooMuchBooks) {
         return "L'utilisateur à plus de 3 livres. Il ne peut plus en réserver"
       }
     }
-    return "réservation du livre id n°" + bookId;
   }
 
   @Put(':bookId/return')
-  reportRenderingBook(@Param('bookId') bookId: number) {
-    console.log(bookId);
-    return "signalement de rendu du livre avec l'id " + bookId;
+  reportRenderingBook(@Param('bookId') bookId: number, @Body() userId: number) {
+    try {
+      return this.appService.report(bookId, userId);
+    } catch (e) {
+      if (e instanceof UserHasNeverReseveBooks) {
+        return "L'utilisateur ne peut pas rendre ce livre car il ne l'a jamais emprunté"
+      }
+    }
   }
-
 }

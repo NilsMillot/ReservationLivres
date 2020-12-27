@@ -8,7 +8,8 @@ import { UserSchema, User } from './schemas/user.schema';
 @Module({
   imports: [
     MongooseModule.forRoot('mongodb://localhost/nest'),
-    MongooseModule.forFeature([{ name: Book.name, schema: BookSchema }], [{ name: User.name, schema: UserSchema }])
+    MongooseModule.forFeature([{ name: Book.name, schema: BookSchema }]),
+    MongooseModule.forFeature([{ name: User.name, schema: UserSchema }]),
   ],
   controllers: [AppController],
   providers: [AppService],

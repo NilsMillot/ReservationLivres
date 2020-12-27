@@ -39,12 +39,8 @@ export class UserDTO{
 
 export class ReservationDTO{
     @IsNumber()
-    @IsOptional()
-    id: number;
-
-    @IsNumber()
     @IsDefined()
-    bookId: number;
+    id: number;
 
     @IsDate()
     @IsOptional()
@@ -53,5 +49,8 @@ export class ReservationDTO{
     @IsDate()
     @IsOptional()
     endReserve: Date;
-}
 
+    // @IsNumber()
+    // @IsDefined()
+    // bookId: number;
+}
