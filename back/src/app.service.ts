@@ -1,9 +1,10 @@
-import { Injectable } from '@nestjs/common';
 import { Model } from 'mongoose';
+import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { BookDTO, UserDTO, ReservationDTO } from './app.dto';
 import { Book, BookDocument } from './schemas/book.schema';
 import { User, UserDocument } from './schemas/user.schema';
+import { Reservation, ReservationDocument } from './schemas/reservation.schema';
 
 
 @Injectable()
@@ -11,11 +12,14 @@ export class AppService {
 
   constructor(
     @InjectModel(Book.name)
-    @InjectModel(User.name)
     private readonly bookModel: Model<BookDocument>,
+    @InjectModel(User.name)
     private readonly userModel: Model<UserDocument>,
+    @InjectModel(Reservation.name)
+    private readonly reservationModel: Model<ReservationDocument>,
   ) { }
 
+  //----------------------------------  BOOKS  ----------------------------------
   async getBooks(): Promise<Book[]> {
       const books = await this.bookModel.find().exec();
       return books;
@@ -40,7 +44,9 @@ export class AppService {
 
   async assign(bookId: number, userId: number) {
     const books = await this.bookModel
-      .find({ reservedById: userId })
+      // .find({ reservedById: userId })
+      .findById(bookId)
+      .update({ reservedById: userId }, { isReserved: true })
       .exec();
 
     if (books.length > 2) {
@@ -59,10 +65,22 @@ export class AppService {
     }
   }
 
-  // async createUser(userDTO: UserDTO): Promise<User> {
-  //     const createdUser = await new this.userModel(userDTO);
-  //     return createdUser.save();
-  // }
+  //----------------------------------  USERS  ----------------------------------
+  async createUser(userDTO: UserDTO): Promise<User> {
+      const createdUser = await new this.userModel(userDTO);
+      return createdUser.save();
+  }
+
+  async deleteUser(userID: number): Promise<void> {
+      const deletedUser = await this.userModel
+          .findByIdAndRemove(userID);
+  }
+
+  //----------------------------------  RESERVATIONS  ----------------------------------
+  async createReservation(reservationDTO: ReservationDTO): Promise<Reservation> {
+      const createdReservation = await new this.reservationModel(reservationDTO);
+      return createdReservation.save();
+  }
 }
 export class UserHasTooMuchBooks extends Error {}
 export class UserHasNeverReseveBooks extends Error {}

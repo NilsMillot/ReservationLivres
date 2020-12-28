@@ -4,7 +4,7 @@ import { BookDTO, UserDTO } from './app.dto'
 import { UserHasTooMuchBooks, UserHasNeverReseveBooks } from './app.service';
 
 @Controller('books')
-export class AppController {
+export class BookController {
   constructor(private readonly appService: AppService) {  }
 
   @Post()

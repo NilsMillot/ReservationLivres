@@ -38,8 +38,12 @@ export class UserDTO{
 }
 
 export class ReservationDTO{
-    @IsNumber()
+    @IsString()
     @IsDefined()
+    title: string;
+
+    @IsNumber()
+    @IsOptional()
     id: number;
 
     @IsDate()
