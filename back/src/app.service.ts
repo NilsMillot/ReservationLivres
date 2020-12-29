@@ -21,7 +21,9 @@ export class AppService {
 
   //----------------------------------  BOOKS  ----------------------------------
   async getBooks(): Promise<Book[]> {
-      const books = await this.bookModel.find().exec();
+      const books = await this.bookModel
+            .find()
+            .exec();
       return books;
   }
 
@@ -39,7 +41,8 @@ export class AppService {
 
   async deleteBook(bookID: number): Promise<void> {
       const deletedBook = await this.bookModel
-          .findByIdAndRemove(bookID);
+          .findByIdAndRemove(bookID,
+          {useFindAndModify: false});
   }
 
   async assign(bookId: number, userId: number) {
@@ -48,6 +51,12 @@ export class AppService {
       .findById(bookId)
       .update({ reservedById: userId }, { isReserved: true })
       .exec();
+
+      // this.createReservation(this.bookModel.title);
+      // const reservations = await this.reservationModel
+      //   .findById({ id: bookId })
+      //   .update({ startReserve: 20/12/2020 })
+      //   .exec();
 
     if (books.length > 2) {
       throw new UserHasTooMuchBooks();
@@ -60,12 +69,31 @@ export class AppService {
       .update({ isReserved: false })
       .exec();
 
+    // const reservations = await this.reservationModel
+    //   .findById({ id: bookId })
+    //   .update({ endReserve: 21/12/2020 })
+    //   .exec();
+
     if (books.length == 0) {
       throw new UserHasNeverReseveBooks();
     }
   }
 
   //----------------------------------  USERS  ----------------------------------
+  async getUsers(): Promise<User[]> {
+      const users = await this.userModel
+            .find()
+            .exec();
+      return users;
+  }
+
+  async getUser(userId: number): Promise<User> {
+      const user = await this.userModel
+          .findById(userId)
+          .exec();
+      return user;
+  }
+
   async createUser(userDTO: UserDTO): Promise<User> {
       const createdUser = await new this.userModel(userDTO);
       return createdUser.save();
@@ -73,7 +101,8 @@ export class AppService {
 
   async deleteUser(userID: number): Promise<void> {
       const deletedUser = await this.userModel
-          .findByIdAndRemove(userID);
+            .findByIdAndRemove(userID,
+            {useFindAndModify: false});
   }
 
   //----------------------------------  RESERVATIONS  ----------------------------------

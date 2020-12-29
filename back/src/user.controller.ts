@@ -14,13 +14,16 @@ export class UserController {
 
   @Delete(':userId')
   deleteUser(@Param('userId') userId: number) {
-    console.log(userId);
     return this.appService.deleteUser(userId);
   }
 
   @Get(':userId')
   readUser(@Param('userId') userId: number) {
-    console.log(userId);
-    return "lecture du livre n°" + userId;
+    return this.appService.getUser(userId);
+  }
+
+  @Get('all')
+  readUsers() {
+    return this.appService.getUsers();
   }
 }

@@ -15,14 +15,12 @@ export class BookController {
 
   @Delete(':bookId')
   deleteBook(@Param('bookId') bookId: number) {
-    console.log(bookId);
     return this.appService.deleteBook(bookId);
   }
 
   @Get(':bookId')
   readBook(@Param('bookId') bookId: number) {
-    console.log(bookId);
-    return "lecture du livre n°" + bookId;
+    return this.appService.getBook(bookId);
   }
 
   @Put(':bookId/assign')

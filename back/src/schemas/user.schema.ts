@@ -10,9 +10,9 @@ enum ERole {
 
 @Schema()
 export class User {
-      
+
     @Prop({required: true})
-    title: string;
+    userName: string;
 
     @Prop()
     id: number;
