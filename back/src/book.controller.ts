@@ -35,7 +35,7 @@ export class BookController {
   }
 
   @Put(':bookId/return')
-  reportRenderingBook(@Param('bookId') bookId: number, @Body() userId: number) {
+  reportRenderingBook(@Param('bookId') bookId: number, @Param() userId: number) {
     try {
       return this.appService.report(bookId, userId);
     } catch (e) {

@@ -63,11 +63,6 @@ export class AppService {
       .update({ isReserved: false })
       .exec();
 
-    // const reservations = await this.reservationModel
-    //   .findById({ id: bookId })
-    //   .update({ endReserve: 21/12/2020 })
-    //   .exec();
-
     if (books.length == 0) {
       throw new UserHasNeverReseveBooks();
     }
