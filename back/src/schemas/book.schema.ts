@@ -15,7 +15,7 @@ export class Book {
   @Prop()
   reservedById: number;
 
-  @Prop()
+  @Prop({default: false})
   isReserved: boolean;
 }
 

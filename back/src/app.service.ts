@@ -49,14 +49,8 @@ export class AppService {
     const books = await this.bookModel
       // .find({ reservedById: userId })
       .findById(bookId)
-      .update({ reservedById: userId }, { isReserved: true })
-      .exec();
-
-      // this.createReservation(this.bookModel.title);
-      // const reservations = await this.reservationModel
-      //   .findById({ id: bookId })
-      //   .update({ startReserve: 20/12/2020 })
-      //   .exec();
+      // { reservedById: userId }, { isReserved: true }
+      .update({ isReserved: true }, {useFindAndModify: false});
 
     if (books.length > 2) {
       throw new UserHasTooMuchBooks();

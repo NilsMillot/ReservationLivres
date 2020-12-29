@@ -23,8 +23,8 @@ export class BookController {
     return this.appService.getBook(bookId);
   }
 
-  @Put(':bookId/assign')
-  reserveBook(@Param('bookId') bookId: number, @Body() userId: number) {
+  @Put(':bookId/:userId/assign')
+  reserveBook(@Param('bookId') bookId: number, @Param('userId') userId: number) {
     try {
       return this.appService.assign(bookId, userId);
     } catch (e) {
