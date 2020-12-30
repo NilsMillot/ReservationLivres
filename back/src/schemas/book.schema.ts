@@ -10,13 +10,11 @@ export class Book {
   title: string;
 
   @Prop()
-  id: number;
+  id: string;
 
-  @Prop()
-  reservedById: number;
+  @Prop({default: null})
+  reservedById: string;
 
-  @Prop({default: false})
-  isReserved: boolean;
 }
 
 export const BookSchema = SchemaFactory.createForClass(Book);

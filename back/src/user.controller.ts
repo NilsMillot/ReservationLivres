@@ -13,12 +13,12 @@ export class UserController {
   }
 
   @Delete(':userId')
-  deleteUser(@Param('userId') userId: number) {
+  deleteUser(@Param('userId') userId: string) {
     return this.appService.deleteUser(userId);
   }
 
   @Get(':userId')
-  readUser(@Param('userId') userId: number) {
+  readUser(@Param('userId') userId: string) {
     return this.appService.getUser(userId);
   }
 

@@ -14,17 +14,17 @@ export class BookController {
   }
 
   @Delete(':bookId')
-  deleteBook(@Param('bookId') bookId: number) {
+  deleteBook(@Param('bookId') bookId: string) {
     return this.appService.deleteBook(bookId);
   }
 
   @Get(':bookId')
-  readBook(@Param('bookId') bookId: number) {
+  readBook(@Param('bookId') bookId: string) {
     return this.appService.getBook(bookId);
   }
 
   @Put(':bookId/:userId/assign')
-  reserveBook(@Param('bookId') bookId: number, @Param('userId') userId: number) {
+  reserveBook(@Param('bookId') bookId: string, @Param('userId') userId: string) {
     try {
       return this.appService.assign(bookId, userId);
     } catch (e) {
@@ -35,7 +35,7 @@ export class BookController {
   }
 
   @Put(':bookId/return')
-  reportRenderingBook(@Param('bookId') bookId: number, @Param() userId: number) {
+  reportRenderingBook(@Param('bookId') bookId: string, @Param() userId: string) {
     try {
       return this.appService.report(bookId, userId);
     } catch (e) {

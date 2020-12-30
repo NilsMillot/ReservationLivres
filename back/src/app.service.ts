@@ -27,7 +27,7 @@ export class AppService {
       return books;
   }
 
-  async getBook(bookId: number): Promise<Book> {
+  async getBook(bookId: string): Promise<Book> {
       const book = await this.bookModel
           .findById(bookId)
           .exec();
@@ -39,28 +39,27 @@ export class AppService {
       return createdBook.save();
   }
 
-  async deleteBook(bookID: number): Promise<void> {
+  async deleteBook(bookID: string): Promise<void> {
       const deletedBook = await this.bookModel
           .findByIdAndRemove(bookID,
           {useFindAndModify: false});
   }
 
-  async assign(bookId: number, userId: number) {
+  async assign(bookId: string, userId: string) {
     const books = await this.bookModel
-      // .find({ reservedById: userId })
       .findById(bookId)
-      // { reservedById: userId }, { isReserved: true }
-      .update({ isReserved: true }, {useFindAndModify: false});
+      .updateOne({id: bookId, reservedById: null}, {reservedById: userId})
+      .exec();
 
     if (books.length > 2) {
       throw new UserHasTooMuchBooks();
     }
   }
 
-  async report(bookId: number, userId: number) {
+  async report(bookId: string, userId: string) {
     const books = await this.bookModel
-      .find({ reservedById: userId }, { id: bookId })
-      .update({ isReserved: false })
+      .findById(bookId)
+      .updateOne({id: bookId, reservedById: userId}, {reservedById: null})
       .exec();
 
     if (books.length == 0) {
@@ -76,7 +75,7 @@ export class AppService {
       return users;
   }
 
-  async getUser(userId: number): Promise<User> {
+  async getUser(userId: string): Promise<User> {
       const user = await this.userModel
           .findById(userId)
           .exec();
@@ -88,7 +87,7 @@ export class AppService {
       return createdUser.save();
   }
 
-  async deleteUser(userID: number): Promise<void> {
+  async deleteUser(userID: string): Promise<void> {
       const deletedUser = await this.userModel
             .findByIdAndRemove(userID,
             {useFindAndModify: false});

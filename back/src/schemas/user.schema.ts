@@ -15,7 +15,7 @@ export class User {
     userName: string;
 
     @Prop()
-    id: number;
+    id: string;
 
     @Prop()
     isConnected: boolean;
